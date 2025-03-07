@@ -10,7 +10,9 @@ export const Home = () => {
       <nav>
         <NavLink to="/account">Account</NavLink>
       </nav>
-      <div>{cards?.map((card) => <Card cardData={card} />)}</div>
+      <div className="flex gap-2">
+        {cards?.map((card) => <Card cardData={card} />)}
+      </div>
     </>
   )
 }
