@@ -1,13 +1,16 @@
 import { BrowserRouter, Route, Routes } from 'react-router'
-import { Account } from './pages/account'
-import { Home } from './pages/home'
+import { NavBar } from './components/NavBar'
+import { Account } from './pages/Account'
+import { Home } from './pages/Home'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/account" element={<Account />} />
+        <Route element={<NavBar />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/account" element={<Account />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )
