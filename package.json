@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@auth/core": "^0.37.0",
+    "@convex-dev/auth": "^0.0.80",
     "@tailwindcss/vite": "^4.0.12",
     "clsx": "^2.1.1",
     "convex": "^1.19.5",
