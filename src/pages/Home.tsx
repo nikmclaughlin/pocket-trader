@@ -1,5 +1,4 @@
 import { useQuery } from 'convex/react'
-import { NavLink } from 'react-router'
 import { api } from '../../convex/_generated/api'
 import { Card } from '../components/Card'
 
@@ -8,7 +7,7 @@ export const Home = () => {
   return (
     <>
       <div className="flex gap-2">
-        {cards?.map((card) => <Card cardData={card} />)}
+        {cards?.map((card) => <Card key={card._id} cardData={card} />)}
       </div>
     </>
   )
