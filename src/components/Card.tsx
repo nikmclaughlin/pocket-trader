@@ -1,16 +1,6 @@
-export type CardData = {
-  artist: string
-  cardNo: string
-  category: string
-  description: string
-  flavor: string
-  image: string
-  name: string
-  rarity: string
-  set: string
-}
+import { Doc } from '../../convex/_generated/dataModel'
 
-export const Card = (params: { cardData: CardData }) => {
+export const Card = (params: { cardData: Doc<'cards'> }) => {
   const cardData = params.cardData
 
   return (

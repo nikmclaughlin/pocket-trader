@@ -18,4 +18,9 @@ export default defineSchema({
     rarity: v.string(),
     set: v.string(),
   }),
+
+  wishlists: defineTable({
+    userId: v.id('users'),
+    cards: v.array(v.id('cards')),
+  }).index('by_userId', ['userId']),
 })
