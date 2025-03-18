@@ -35,3 +35,18 @@ export const getForCurrentUser = internalQuery({
 })
 
 export type UserWishlistCards = Infer<typeof userWishlistCards>
+
+export const updateWishlistCards = mutation({
+  args: { newWishlist: v.array(v.id('cards')) },
+  handler: async (ctx, args) => {
+    const currentUser = await getAuthUserId(ctx)
+    const wishlists = await ctx.db
+      .query('wishlists')
+      .withIndex('by_userId')
+      .collect()
+    const userWishlist = wishlists.filter(
+      (wishlist) => wishlist.userId === currentUser
+    )[0]
+    await ctx.db.patch(userWishlist._id, { cards: args.newWishlist })
+  },
+})

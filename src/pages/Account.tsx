@@ -6,6 +6,7 @@ import {
   useQuery,
 } from 'convex/react'
 import { api } from '../../convex/_generated/api'
+import { AddCardModal } from '../components/AddCardModal'
 import { Card } from '../components/Card'
 import { SignInForm } from '../components/SignInForm'
 
@@ -27,9 +28,7 @@ export const Account = () => {
               {wishlistCards.map((card) => {
                 return <Card cardData={card} />
               })}
-              <button className="border-2 border-dashed border-stone-500 text-stone-800 p-2 w-full max-w-48 h-60 bg-stone-200 transition-all hover:bg-stone-50 hover:-translate-1 px-2 hover:shadow-[4px_4px_0_0_#000] hover:shadow-black">
-                + ADD A CARD
-              </button>
+              <AddCardModal />
             </div>
           ) : (
             <button

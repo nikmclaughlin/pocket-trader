@@ -4,11 +4,13 @@ export const Card = (params: { cardData: Doc<'cards'> }) => {
   const cardData = params.cardData
 
   return (
-    <div className="border-2 rounded p-2 max-w-sm flex flex-col items-center">
-      <h2 className="text-2xl font-bold text-center">{cardData.name}</h2>
-      <p className="text-center text-sm text-stone-600">
-        Card ID: {cardData.cardNo}
-      </p>
+    <div className="border-2 rounded p-2 max-w-80 flex flex-col items-center">
+      <div className="flex w-full justify-between items-center">
+        <h2 className="text-2xl font-bold text-center">{cardData.name}</h2>
+        <p className="text-center text-sm text-stone-600">
+          Card ID: {cardData.cardNo}
+        </p>
+      </div>
       <img
         className="w-80 h-80"
         src={cardData.image.length ? cardData.image : null}
@@ -20,7 +22,7 @@ export const Card = (params: { cardData: Doc<'cards'> }) => {
       {/* <div className="border rounded p-2 bg-stone-200">
         <p className="text-xl ">{cardData.description}</p>
       </div> */}
-      <div className="border rounded p-2 bg-stone-200 h-22">
+      <div className="border rounded p-2 bg-stone-200 h-32">
         <p className="italic">{cardData.flavor}</p>
       </div>
       <div className="flex w-full justify-end">
