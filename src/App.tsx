@@ -9,7 +9,7 @@ function App() {
       <Routes>
         <Route element={<NavBar />}>
           <Route path="/" element={<Home />} />
-          <Route path="/account" element={<Account />} />
+          <Route path="/account/:accountId" element={<Account />} />
         </Route>
       </Routes>
     </BrowserRouter>
