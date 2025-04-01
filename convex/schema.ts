@@ -7,6 +7,17 @@ export default defineSchema({
 
   ...authTables,
 
+  users: defineTable({
+    name: v.optional(v.string()),
+    image: v.optional(v.string()),
+    email: v.optional(v.string()),
+    emailVerificationTime: v.optional(v.number()),
+    phone: v.optional(v.string()),
+    phoneVerificationTime: v.optional(v.number()),
+    isAnonymous: v.optional(v.boolean()),
+    friendId: v.optional(v.object({ id: v.string(), isPublic: v.boolean() })),
+  }).index('email', ['email']),
+
   cards: defineTable({
     artist: v.string(),
     cardNo: v.string(),

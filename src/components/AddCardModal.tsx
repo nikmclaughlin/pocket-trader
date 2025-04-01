@@ -23,7 +23,7 @@ export const AddCardModal = () => {
     <Dialog>
       <DialogTrigger asChild>
         <button className="border-2 border-dashed border-stone-500 text-stone-800 p-2 w-full max-w-48 h-60 bg-stone-200 transition-all hover:bg-stone-50 hover:-translate-1 px-2 hover:shadow-[4px_4px_0_0_#000] hover:shadow-black">
-          + ADD A CARD
+          EDIT WISHLIST
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-2xl">
