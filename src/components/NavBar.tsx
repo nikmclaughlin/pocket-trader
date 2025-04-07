@@ -15,8 +15,8 @@ export const NavBar = () => {
           to="/"
           className={({ isActive }) =>
             clsx(
-              'border p-2 text-xl',
-              isActive ? 'bg-stone-300' : 'bg-stone-400'
+              'border p-2 text-xl transition-all duration-500 ease-out',
+              isActive ? 'bg-stone-300 scale-105' : 'bg-stone-400'
             )
           }
         >
@@ -26,8 +26,8 @@ export const NavBar = () => {
           to={accountTarget}
           className={({ isActive }) =>
             clsx(
-              'border p-2 text-xl',
-              isActive ? 'bg-stone-300' : 'bg-stone-400'
+              'border p-2 text-xl transition-all duration-500 ease-out',
+              isActive ? 'bg-stone-300 scale-105' : 'bg-stone-400'
             )
           }
         >
