@@ -1,39 +1,56 @@
-import clsx from 'clsx'
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+} from '@/components/ui/navigation-menu'
+
 import { useQuery } from 'convex/react'
 import { NavLink, Outlet } from 'react-router'
 import { api } from '../../convex/_generated/api'
 
 export const NavBar = () => {
   const currentUser = useQuery(api.users.currentUser)
+  const accountTarget = currentUser
+    ? '/account/' + currentUser._id
+    : '/account/sign-in'
 
-  const accountTarget = currentUser ? '/account/' + currentUser._id : '/account'
+  const components: { title: string; to: string; description: string }[] = [
+    {
+      title: 'Home',
+      to: '/',
+      description:
+        'A modal dialog that interrupts the user with important content and expects a response.',
+    },
+    {
+      title: 'Account',
+      to: accountTarget,
+      description:
+        'For sighted users to preview content available behind a link.',
+    },
+  ]
 
   return (
     <>
-      <nav className="flex p-4">
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            clsx(
-              'border p-2 text-xl transition-all duration-500 ease-out',
-              isActive ? 'bg-stone-300 scale-105' : 'bg-stone-400'
+      <NavigationMenu className="z-5 w-full justify-between">
+        <div className="text-xl size-10 rounded-base flex bg-main hover:bg-background transition-colors text-main-foreground border-2 border-black items-center justify-center font-heading">
+          PT
+        </div>
+        <NavigationMenuList>
+          {components.map((component) => {
+            return (
+              <NavigationMenuItem>
+                <NavLink to={component.to}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    {component.title}
+                  </NavigationMenuLink>
+                </NavLink>
+              </NavigationMenuItem>
             )
-          }
-        >
-          Home
-        </NavLink>
-        <NavLink
-          to={accountTarget}
-          className={({ isActive }) =>
-            clsx(
-              'border p-2 text-xl transition-all duration-500 ease-out',
-              isActive ? 'bg-stone-300 scale-105' : 'bg-stone-400'
-            )
-          }
-        >
-          Account
-        </NavLink>
-      </nav>
+          })}
+        </NavigationMenuList>
+      </NavigationMenu>
       <Outlet />
     </>
   )

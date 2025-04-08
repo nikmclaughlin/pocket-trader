@@ -4,7 +4,9 @@ import { api } from '../../convex/_generated/api'
 import { AddCardModal } from '../components/AddCardModal'
 import { Card } from '../components/Card'
 
-// import { FriendIdForm } from '../components/FriendIdForm'
+import { Button } from '@/components/ui/button'
+import { useState } from 'react'
+import { FriendIdForm } from '../components/FriendIdForm'
 
 export const CurrentAccount = () => {
   const wishlistCards = useQuery(api.cards.getWishlistCardsForUser)
@@ -13,19 +15,35 @@ export const CurrentAccount = () => {
 
   const { signOut } = useAuthActions()
 
+  const [isEditingProfile, setIsEditingProfile] = useState(false)
+
   return (
     <>
       <div className="flex flex-col w-full max-w-6xl">
-        {/* TODO: <FriendIdForm /> */}
-        <div className=" absolute self-end flex flex-col items-end p-4 border-4 border-double rounded">
+        {/* <FriendIdForm /> */}
+        <div className="self-end flex flex-col items-end p-4 border-4 border-double rounded transition-all">
           <p className="text-xl text-right">{`WELCOME ${currentUser?.name?.toUpperCase() || 'BACK!'}`}</p>
+          <p className="text-md text-right text-stone-700">{`FRIEND ID: ${currentUser?.friendId || '---'}`}</p>
           {/* TODO: Edit Profile */}
-          <button
-            className="bg-stone-400 border text-sm h-8 transition-all hover:bg-stone-300 hover:-translate-0.5 px-2 hover:shadow-[4px_4px_0_0_#000] hover:shadow-black"
-            onClick={() => void signOut()}
-          >
-            Sign Out
-          </button>
+          {isEditingProfile && <FriendIdForm />}
+          <div className="flex gap-2 p-2">
+            {isEditingProfile ? (
+              <Button onClick={() => setIsEditingProfile(false)}>
+                Save Changes
+              </Button>
+            ) : (
+              <Button
+                variant="reverse"
+                onClick={() => setIsEditingProfile(true)}
+              >
+                Edit Profile
+              </Button>
+            )}
+
+            <Button variant="reverse" onClick={() => void signOut()}>
+              Sign Out
+            </Button>
+          </div>
         </div>
         <p>MY WISHLIST</p>
 
@@ -39,12 +57,7 @@ export const CurrentAccount = () => {
             </div>
           </>
         ) : (
-          <button
-            className="bg-stone-400 border text-sm h-8 transition-all -translate-0.5 px-2 shadow-[4px_4px_0_0_#000] shadow-black hover:bg-stone-300 hover:translate-0 hover:shadow-none"
-            onClick={() => createWishlist()}
-          >
-            Create Wishlist
-          </button>
+          <Button onClick={() => createWishlist()}>Create Wishlist</Button>
         )}
       </div>
     </>
