@@ -45,14 +45,14 @@ export const CurrentAccount = () => {
             </Button>
           </div>
         </div>
-        <p>MY WISHLIST</p>
+        <p className="font-heading text-2xl">MY WISHLIST</p>
 
         {wishlistCards ? (
           <>
             <AddCardModal />
             <div className="flex gap-2 w-full p-2">
               {wishlistCards.map((card) => {
-                return <Card cardData={card} />
+                return <Card cardData={card} key={card._id} />
               })}
             </div>
           </>
