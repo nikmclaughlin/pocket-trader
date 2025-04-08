@@ -1,5 +1,9 @@
 import { CardCatalog } from '../components/CardCatalog'
 
 export const Home = () => {
-  return <CardCatalog />
+  return (
+    <div className="h-screen bg-background flex flex-col items-center p-4 w-full">
+      <CardCatalog />
+    </div>
+  )
 }
