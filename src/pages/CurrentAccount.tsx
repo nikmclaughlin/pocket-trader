@@ -11,6 +11,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useState } from 'react'
 import { FriendIdForm } from '../components/FriendIdForm'
 
+// TODO: Split account tabs into separate component files
+
 export const CurrentAccount = () => {
   const wishlistCards = useQuery(api.cards.getListCardsForUser, {
     listType: 'wishlist',
@@ -65,7 +67,10 @@ export const CurrentAccount = () => {
 
             {wishlistCards ? (
               <>
-                <AddCardModal listType="wishlist" />
+                <AddCardModal
+                  listType="wishlist"
+                  currentList={wishlistCards.map((c) => c._id)}
+                />
                 <div className="flex gap-2 w-full p-2">
                   {wishlistCards.map((card) => {
                     return <Card cardData={card} key={card._id} />
@@ -82,7 +87,10 @@ export const CurrentAccount = () => {
             <p className="font-heading text-2xl">MY COLLECTION</p>
             {collectionCards ? (
               <>
-                <AddCardModal listType="collection" />
+                <AddCardModal
+                  listType="collection"
+                  currentList={collectionCards.map((c) => c._id)}
+                />
                 <div className="flex gap-2 w-full p-2">
                   {collectionCards.map((card) => {
                     return <Card cardData={card} key={card._id} />

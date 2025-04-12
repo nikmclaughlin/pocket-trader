@@ -16,9 +16,12 @@ import {
 // import { Input } from '@/components/ui/input'
 // import { Label } from '@/components/ui/label'
 
-export const AddCardModal = (params: { listType: CardListType }) => {
-  const { listType } = params
-  const [selectedCards, setSelectedCards] = useState<Id<'cards'>[]>([])
+export const AddCardModal = (params: {
+  listType: CardListType
+  currentList: Id<'cards'>[]
+}) => {
+  const { listType, currentList } = params
+  const [selectedCards, setSelectedCards] = useState<Id<'cards'>[]>(currentList)
 
   const updateListCards = useMutation(api.userCardLists.updateListCards)
 
@@ -29,7 +32,7 @@ export const AddCardModal = (params: { listType: CardListType }) => {
       <DialogTrigger asChild>
         <Button className="max-w-max">EDIT {listName}</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-2xl">
+      <DialogContent className="sm:max-w-4xl">
         <DialogHeader>
           <div className="flex justify-between p-4">
             <DialogTitle>ADD TO YOUR {listName}</DialogTitle>

@@ -23,7 +23,7 @@ export const CardSelector = (props: {
 
   return (
     <>
-      <div className="grid grid-cols-4 justify-around gap-2 p-2 border border-green-200">
+      <div className="grid grid-cols-4 justify-around gap-2 p-2">
         {cards?.map((card) => {
           //   const isSelected = selectedCards?.includes(card._id)
           return (
