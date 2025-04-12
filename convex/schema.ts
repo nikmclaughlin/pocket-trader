@@ -30,8 +30,9 @@ export default defineSchema({
     set: v.string(),
   }),
 
-  wishlists: defineTable({
+  userCardLists: defineTable({
     userId: v.id('users'),
+    listType: v.union(v.literal('wishlist'), v.literal('collection')),
     cards: v.array(v.id('cards')),
   }).index('by_userId', ['userId']),
 })

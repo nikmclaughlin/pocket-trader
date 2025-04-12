@@ -6,16 +6,19 @@ import { Card } from '../components/Card'
 
 import { Button } from '@/components/ui/button'
 
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import { useState } from 'react'
 import { FriendIdForm } from '../components/FriendIdForm'
 
 export const CurrentAccount = () => {
-  const wishlistCards = useQuery(api.cards.getWishlistCardsForUser)
-  const createWishlist = useMutation(api.wishlists.createWishlist)
+  const wishlistCards = useQuery(api.cards.getListCardsForUser, {
+    listType: 'wishlist',
+  })
+  const collectionCards = useQuery(api.cards.getListCardsForUser, {
+    listType: 'collection',
+  })
+  const createCardList = useMutation(api.userCardLists.createUserCardlist)
   const currentUser = useQuery(api.users.currentUser)
 
   const { signOut } = useAuthActions()
@@ -29,7 +32,7 @@ export const CurrentAccount = () => {
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="account">Account</TabsTrigger>
             <TabsTrigger value="wishlist">Wishlist</TabsTrigger>
-            <TabsTrigger value="catalog">Catalog</TabsTrigger>
+            <TabsTrigger value="collection">Collection</TabsTrigger>
           </TabsList>
           <TabsContent value="account">
             <div className=" flex flex-col p-4 ">
@@ -62,7 +65,7 @@ export const CurrentAccount = () => {
 
             {wishlistCards ? (
               <>
-                <AddCardModal />
+                <AddCardModal listType="wishlist" />
                 <div className="flex gap-2 w-full p-2">
                   {wishlistCards.map((card) => {
                     return <Card cardData={card} key={card._id} />
@@ -70,7 +73,28 @@ export const CurrentAccount = () => {
                 </div>
               </>
             ) : (
-              <Button onClick={() => createWishlist()}>Create Wishlist</Button>
+              <Button onClick={() => createCardList({ listType: 'wishlist' })}>
+                Create Wishlist
+              </Button>
+            )}
+          </TabsContent>
+          <TabsContent value="collection">
+            <p className="font-heading text-2xl">MY COLLECTION</p>
+            {collectionCards ? (
+              <>
+                <AddCardModal listType="collection" />
+                <div className="flex gap-2 w-full p-2">
+                  {collectionCards.map((card) => {
+                    return <Card cardData={card} key={card._id} />
+                  })}
+                </div>
+              </>
+            ) : (
+              <Button
+                onClick={() => createCardList({ listType: 'collection' })}
+              >
+                Create Collection
+              </Button>
             )}
           </TabsContent>
         </Tabs>

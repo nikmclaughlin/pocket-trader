@@ -17,21 +17,22 @@ export const get = query({
   },
 })
 
-export const getWishlistCardsForUser = query({
-  handler: async (ctx) => {
+export const getListCardsForUser = query({
+  args: { listType: v.union(v.literal('wishlist'), v.literal('collection')) },
+  handler: async (ctx, args) => {
     // get the current user (Id<'users'>)
     const currentUser = await getAuthUserId(ctx)
     // get that users wishlist(s) (Doc<'wishlist'>[])
-    const wishlists = await ctx.db
-      .query('wishlists')
+    const userCardLists = await ctx.db
+      .query('userCardLists')
       .withIndex('by_userId')
       .collect()
-    const userWishlist = wishlists?.filter(
-      (wishlist) => wishlist.userId === currentUser
+    const targetUserList = userCardLists?.filter(
+      (list) => list.userId === currentUser && list.listType === args.listType
     )[0]
     const allCards = await list(ctx, {})
-    if (allCards && userWishlist) {
-      return allCards.filter((card) => userWishlist.cards.includes(card._id))
+    if (allCards && targetUserList) {
+      return allCards.filter((card) => targetUserList.cards.includes(card._id))
     }
   },
 })

@@ -1,4 +1,5 @@
 import { useMutation } from 'convex/react'
+import { CardListType } from 'convex/userCardLists'
 import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
 import { Id } from '../../convex/_generated/dataModel'
@@ -15,24 +16,30 @@ import {
 // import { Input } from '@/components/ui/input'
 // import { Label } from '@/components/ui/label'
 
-export const AddCardModal = () => {
+export const AddCardModal = (params: { listType: CardListType }) => {
+  const { listType } = params
   const [selectedCards, setSelectedCards] = useState<Id<'cards'>[]>([])
 
-  const updateWishlistCards = useMutation(api.wishlists.updateWishlistCards)
+  const updateListCards = useMutation(api.userCardLists.updateListCards)
+
+  const listName = listType.toString().toUpperCase()
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="max-w-max">EDIT WISHLIST</Button>
+        <Button className="max-w-max">EDIT {listName}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <div className="flex justify-between p-4">
-            <DialogTitle>ADD TO YOUR WISHLIST</DialogTitle>
+            <DialogTitle>ADD TO YOUR {listName}</DialogTitle>
             <DialogClose asChild>
               <Button
                 onClick={() =>
-                  updateWishlistCards({ newWishlist: selectedCards })
+                  updateListCards({
+                    newCards: selectedCards,
+                    listType: listType,
+                  })
                 }
               >
                 SAVE CHANGES
