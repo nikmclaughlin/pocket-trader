@@ -22,14 +22,12 @@ export const NavBar = () => {
     {
       title: 'Home',
       to: '/',
-      description:
-        'A modal dialog that interrupts the user with important content and expects a response.',
+      description: 'The homepage of PocketTrader.',
     },
     {
       title: 'Account',
       to: accountTarget,
-      description:
-        'For sighted users to preview content available behind a link.',
+      description: 'The current users account page.',
     },
   ]
 
@@ -37,7 +35,7 @@ export const NavBar = () => {
     <>
       <NavigationMenu className="z-5 w-full">
         <div className="w-full max-w-7xl px-4 flex justify-between">
-          <div className="text-xl size-10 rounded-base flex bg-main hover:bg-background transition-colors text-main-foreground border-2 border-black items-center justify-center font-heading">
+          <div className="text-xl size-10 rounded-base flex bg-main hover:bg-background transition-all hover:animate-spin text-main-foreground border-2 border-black items-center justify-center font-heading">
             PT
           </div>
           <NavigationMenuList>
