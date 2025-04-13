@@ -1,6 +1,6 @@
 import { Doc } from '../../convex/_generated/dataModel'
 
-export const Card = (params: { cardData: Doc<'cards'> }) => {
+export const PkmnCard = (params: { cardData: Doc<'cards'> }) => {
   const cardData = params.cardData
 
   return (

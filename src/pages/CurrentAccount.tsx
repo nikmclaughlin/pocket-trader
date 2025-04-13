@@ -2,7 +2,7 @@ import { useAuthActions } from '@convex-dev/auth/react'
 import { useMutation, useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
 import { AddCardModal } from '../components/AddCardModal'
-import { Card } from '../components/Card'
+import { PkmnCard } from '../components/PkmnCard'
 
 import { Button } from '@/components/ui/button'
 
@@ -74,7 +74,7 @@ export const CurrentAccount = () => {
                 />
                 <div className="flex gap-2 w-full p-2">
                   {wishlistCards.map((card) => {
-                    return <Card cardData={card} key={card._id} />
+                    return <PkmnCard cardData={card} key={card._id} />
                   })}
                 </div>
               </>
@@ -94,7 +94,7 @@ export const CurrentAccount = () => {
                 />
                 <div className="flex gap-2 w-full p-2">
                   {collectionCards.map((card) => {
-                    return <Card cardData={card} key={card._id} />
+                    return <PkmnCard cardData={card} key={card._id} />
                   })}
                 </div>
               </>

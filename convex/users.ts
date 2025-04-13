@@ -21,6 +21,19 @@ export const getCurrentUser = query({
   },
 })
 
+export const getPublicUsers = query({
+  handler: async (ctx) => {
+    // const currentUser = await getAuthUserId(ctx)
+    const users = await ctx.db
+      .query('users')
+      .withIndex('by_creation_time')
+      .collect()
+    return users.filter(
+      (user) => user.isAnonymous === false /*&& user._id !== currentUser*/
+    )
+  },
+})
+
 export const updateUser = mutation({
   args: {
     user: v.object({

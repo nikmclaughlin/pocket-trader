@@ -2,7 +2,7 @@ import { useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
 import { Id } from '../../convex/_generated/dataModel'
 import { cn } from '../lib/utils'
-import { Card } from './Card'
+import { PkmnCard } from './PkmnCard'
 
 export const CardSelector = (props: {
   cardState: Id<'cards'>[]
@@ -35,7 +35,7 @@ export const CardSelector = (props: {
               onClick={() => toggleCardSelection(card._id)}
               key={card._id}
             >
-              <Card cardData={card} />
+              <PkmnCard cardData={card} />
             </div>
           )
         })}

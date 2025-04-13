@@ -1,6 +1,6 @@
 import { getAuthUserId } from '@convex-dev/auth/server'
 import { Infer, v } from 'convex/values'
-import { internalQuery, mutation } from './_generated/server'
+import { internalQuery, mutation, query } from './_generated/server'
 
 const cardListType = v.union(v.literal('wishlist'), v.literal('collection'))
 export type CardListType = Infer<typeof cardListType>
@@ -39,6 +39,18 @@ export const getForCurrentUser = internalQuery({
     return userList.cards
   },
   returns: userCardList,
+})
+
+export const getListsOfTypeForUsers = query({
+  args: { listType: cardListType, users: v.array(v.id('users')) },
+  handler: async (ctx, args) => {
+    return (
+      await ctx.db.query('userCardLists').withIndex('by_userId').collect()
+    ).filter(
+      (list) =>
+        list.listType === args.listType && args.users.includes(list.userId)
+    )
+  },
 })
 
 export const updateListCards = mutation({
