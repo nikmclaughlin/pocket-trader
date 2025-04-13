@@ -34,6 +34,13 @@ export const getPublicUsers = query({
   },
 })
 
+export const getUserById = query({
+  args: { userId: v.id('users') },
+  handler: async (ctx, args) => {
+    return await ctx.db.get(args.userId)
+  },
+})
+
 export const updateUser = mutation({
   args: {
     user: v.object({

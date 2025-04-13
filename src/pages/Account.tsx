@@ -1,3 +1,4 @@
+import { OtherPlayerAccount } from '@/components/OtherPlayerAccount'
 import { Authenticated, Unauthenticated, useQuery } from 'convex/react'
 import { useParams } from 'react-router'
 import { api } from '../../convex/_generated/api'
@@ -15,7 +16,7 @@ export const Account = () => {
         {accountId === currentUser?._id ? (
           <CurrentAccount />
         ) : (
-          <p>SOMEBODY ELSE'S ACCOUNT</p>
+          <OtherPlayerAccount />
         )}
       </Authenticated>
       <Unauthenticated>
