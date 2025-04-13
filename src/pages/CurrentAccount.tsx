@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import { useState } from 'react'
-import { FriendIdForm } from '../components/FriendIdForm'
+import { UserProfileForm } from '../components/UserProfileForm'
 
 // TODO: Split account tabs into separate component files
 
@@ -21,11 +21,15 @@ export const CurrentAccount = () => {
     listType: 'collection',
   })
   const createCardList = useMutation(api.userCardLists.createUserCardlist)
-  const currentUser = useQuery(api.users.currentUser)
+  const currentUser = useQuery(api.users.getCurrentUser)
 
   const { signOut } = useAuthActions()
 
   const [isEditingProfile, setIsEditingProfile] = useState(false)
+
+  const userProfileFormSubmit = () => {
+    setIsEditingProfile(false)
+  }
 
   return (
     <>
@@ -38,15 +42,12 @@ export const CurrentAccount = () => {
           </TabsList>
           <TabsContent value="account">
             <div className=" flex flex-col p-4 ">
-              <p className="text-xl font-heading">{`WELCOME ${currentUser?.name?.toUpperCase() || 'BACK!'}`}</p>
-              <p className="text-md font-base text-foreground">{`FRIEND ID: ${currentUser?.friendId || '---'}`}</p>
+              <p className="text-xl font-heading">{`WELCOME ${currentUser?.username?.toUpperCase() || 'BACK!'}`}</p>
+              <p className="text-md font-base text-foreground">{`FRIEND ID: ${currentUser?.friendId?.id || '---'}`}</p>
               {/* TODO: Edit Profile */}
-              {isEditingProfile && <FriendIdForm />}
-              <div className="flex gap-2 p-2">
+              <div className="flex flex-col items-start gap-2 p-2">
                 {isEditingProfile ? (
-                  <Button onClick={() => setIsEditingProfile(false)}>
-                    Save Changes
-                  </Button>
+                  <UserProfileForm submitCb={userProfileFormSubmit} />
                 ) : (
                   <Button
                     variant="reverse"

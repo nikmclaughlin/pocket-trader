@@ -8,7 +8,7 @@ export default defineSchema({
   ...authTables,
 
   users: defineTable({
-    name: v.optional(v.string()),
+    username: v.optional(v.string()),
     image: v.optional(v.string()),
     email: v.optional(v.string()),
     emailVerificationTime: v.optional(v.number()),
