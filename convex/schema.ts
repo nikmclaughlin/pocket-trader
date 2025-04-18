@@ -16,6 +16,28 @@ export default defineSchema({
     friendId: v.optional(v.object({ id: v.string(), isPublic: v.boolean() })),
   }).index('email', ['email']),
 
+  sets: defineTable({
+    id: v.string(),
+    name: v.string(),
+    printedTotal: v.number(),
+    total: v.number(),
+    legalities: v.union(
+      v.object({}),
+      v.object({
+        unlimited: v.string(),
+        standard: v.string(),
+        expanded: v.string(),
+      })
+    ),
+    ptcgoCode: v.string(),
+    releaseDate: v.string(),
+    updatedAt: v.string(),
+    images: v.object({
+      symbol: v.string(),
+      logo: v.string(),
+    }),
+  }),
+
   cards: defineTable({
     artist: v.string(),
     cardNo: v.string(),
