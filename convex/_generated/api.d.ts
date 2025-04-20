@@ -15,6 +15,8 @@ import type {
 } from "convex/server";
 import type * as auth from "../auth.js";
 import type * as cards from "../cards.js";
+import type * as crons from "../crons.js";
+import type * as github from "../github.js";
 import type * as http from "../http.js";
 import type * as sets from "../sets.js";
 import type * as userCardLists from "../userCardLists.js";
@@ -31,6 +33,8 @@ import type * as users from "../users.js";
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   cards: typeof cards;
+  crons: typeof crons;
+  github: typeof github;
   http: typeof http;
   sets: typeof sets;
   userCardLists: typeof userCardLists;

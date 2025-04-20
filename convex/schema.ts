@@ -1,6 +1,31 @@
 import { authTables } from '@convex-dev/auth/server'
 import { defineSchema, defineTable } from 'convex/server'
-import { v } from 'convex/values'
+import { Infer, v } from 'convex/values'
+
+export const setValidator = v.object({
+  id: v.string(),
+  name: v.string(),
+  series: v.string(),
+  printedTotal: v.number(),
+  total: v.number(),
+  legalities: v.union(
+    v.object({}),
+    v.object({
+      unlimited: v.string(),
+      standard: v.string(),
+      expanded: v.string(),
+    })
+  ),
+  ptcgoCode: v.string(),
+  releaseDate: v.string(),
+  updatedAt: v.string(),
+  images: v.object({
+    symbol: v.string(),
+    logo: v.string(),
+  }),
+})
+
+export type Set = Infer<typeof setValidator>
 
 export default defineSchema({
   // Other tables here...
@@ -16,27 +41,7 @@ export default defineSchema({
     friendId: v.optional(v.object({ id: v.string(), isPublic: v.boolean() })),
   }).index('email', ['email']),
 
-  sets: defineTable({
-    id: v.string(),
-    name: v.string(),
-    printedTotal: v.number(),
-    total: v.number(),
-    legalities: v.union(
-      v.object({}),
-      v.object({
-        unlimited: v.string(),
-        standard: v.string(),
-        expanded: v.string(),
-      })
-    ),
-    ptcgoCode: v.string(),
-    releaseDate: v.string(),
-    updatedAt: v.string(),
-    images: v.object({
-      symbol: v.string(),
-      logo: v.string(),
-    }),
-  }),
+  sets: defineTable(setValidator),
 
   cards: defineTable({
     artist: v.string(),
