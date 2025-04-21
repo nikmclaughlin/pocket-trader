@@ -27,6 +27,73 @@ export const setValidator = v.object({
 
 export type Set = Infer<typeof setValidator>
 
+export const energyTypeValidator = v.union(
+  v.literal('Grass'),
+  v.literal('Fire'),
+  v.literal('Water'),
+  v.literal('Lightning'),
+  v.literal('Psychic'),
+  v.literal('Fighting'),
+  v.literal('Darkness'),
+  v.literal('Metal'),
+  v.literal('Dragon'),
+  v.literal('Colorless')
+)
+export type energyTypes = Infer<typeof energyTypeValidator>
+
+export const cardValidator = v.object({
+  id: v.string(),
+  name: v.string(),
+  supertype: v.string(),
+  subtypes: v.array(v.string()),
+  rules: v.optional(v.array(v.string())),
+  hp: v.optional(v.string()),
+  types: v.optional(v.array(energyTypeValidator)),
+  evolvesFrom: v.optional(v.string()),
+  evolvesTo: v.optional(v.array(v.string())),
+  abilities: v.optional(
+    v.array(
+      v.object({
+        name: v.string(),
+        text: v.string(),
+        type: energyTypeValidator,
+      })
+    )
+  ),
+  attacks: v.optional(
+    v.array(
+      v.object({
+        name: v.string(),
+        cost: v.array(energyTypeValidator),
+        convertedEnergyCost: v.number(),
+        damage: v.string(),
+        text: v.string(),
+      })
+    )
+  ),
+  weaknesses: v.optional(
+    v.array(
+      v.object({
+        type: energyTypeValidator,
+        value: v.string(),
+      })
+    )
+  ),
+  convertedRetreatCost: v.optional(v.number()),
+  retreatCost: v.optional(v.array(energyTypeValidator)),
+  number: v.string(),
+  artist: v.string(),
+  rarity: v.string(),
+  flavorText: v.optional(v.string()),
+  regulationMark: v.string(),
+  images: v.object({
+    small: v.string(),
+    large: v.string(),
+  }),
+})
+
+export type Card = Infer<typeof cardValidator>
+
 export default defineSchema({
   // Other tables here...
 
@@ -43,17 +110,7 @@ export default defineSchema({
 
   sets: defineTable(setValidator),
 
-  cards: defineTable({
-    artist: v.string(),
-    cardNo: v.string(),
-    category: v.string(),
-    description: v.string(),
-    flavor: v.string(),
-    image: v.string(),
-    name: v.string(),
-    rarity: v.string(),
-    set: v.string(),
-  }),
+  cards: defineTable(cardValidator),
 
   userCardLists: defineTable({
     userId: v.id('users'),

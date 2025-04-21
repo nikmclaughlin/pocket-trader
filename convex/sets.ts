@@ -3,21 +3,33 @@ import { internal } from './_generated/api'
 import {
   internalAction,
   internalMutation,
+  internalQuery,
   MutationCtx,
 } from './_generated/server'
-import { fetchRemoteSets } from './github'
 import { Set, setValidator } from './schema'
+
+export const getCurrentSetIds = internalQuery({
+  handler: async (ctx) => {
+    const currentSets = await ctx.db.query('sets').collect()
+
+    return currentSets.map((set) => set.id)
+  },
+})
 
 const clearExistingSets = async (ctx: MutationCtx) => {
   const existingSets = await ctx.db.query('sets').collect()
 
-  existingSets.map(async (set) => {
-    await ctx.db.delete(set._id)
-  })
+  await Promise.all(
+    existingSets.map(async (set) => {
+      await ctx.db.delete(set._id)
+    })
+  )
 }
 
 const insertSets = async (args: { ctx: MutationCtx; newSets: Set[] }) => {
-  args.newSets.map((set) => args.ctx.db.insert('sets', set))
+  await Promise.all(
+    args.newSets.map(async (set) => await args.ctx.db.insert('sets', set))
+  )
 }
 
 export const replaceSetsTableData = internalMutation({
@@ -25,9 +37,8 @@ export const replaceSetsTableData = internalMutation({
     newSets: v.array(setValidator),
   }),
   handler: async (ctx, args) => {
-    clearExistingSets(ctx).then(() => {
-      insertSets({ ctx, newSets: args.newSets })
-    })
+    await clearExistingSets(ctx)
+    await insertSets({ ctx, newSets: args.newSets })
   },
 })
 
