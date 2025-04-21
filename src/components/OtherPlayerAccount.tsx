@@ -5,11 +5,12 @@ import { api } from '../../convex/_generated/api'
 import { PkmnCard } from './PkmnCard'
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Id } from 'convex/_generated/dataModel'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 
 export const OtherPlayerAccount = () => {
   const routerParams = useParams()
-  const targetId = routerParams.accountId
+  const targetId = routerParams.accountId as Id<'users'>
   const targetUser = useQuery(api.users.getUserById, { userId: targetId })
   const collectionCards = useQuery(api.cards.getListCardsForUser, {
     listType: 'collection',
@@ -42,7 +43,7 @@ export const OtherPlayerAccount = () => {
           <p className="font-heading text-2xl">COLLECTION</p>
           {collectionCards ? (
             <>
-              <div className="flex gap-2 w-full p-2">
+              <div className="grid grid-cols-4 justify-around gap-2 p-2">
                 {collectionCards.map((card) => {
                   return <PkmnCard cardData={card} key={card._id} />
                 })}
@@ -61,7 +62,7 @@ export const OtherPlayerAccount = () => {
           <p className="font-heading text-2xl">WISHLIST</p>
           {wishlistCards ? (
             <>
-              <div className="flex gap-2 w-full p-2">
+              <div className="grid grid-cols-4 justify-around gap-2 p-2">
                 {wishlistCards.map((card) => {
                   return <PkmnCard cardData={card} key={card._id} />
                 })}

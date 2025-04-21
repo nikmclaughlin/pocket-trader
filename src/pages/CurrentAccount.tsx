@@ -72,7 +72,7 @@ export const CurrentAccount = () => {
                   listType="wishlist"
                   currentList={wishlistCards.map((c) => c._id)}
                 />
-                <div className="flex gap-2 w-full p-2">
+                <div className="grid grid-cols-4 justify-around gap-2 p-2">
                   {wishlistCards.map((card) => {
                     return <PkmnCard cardData={card} key={card._id} />
                   })}
@@ -92,7 +92,7 @@ export const CurrentAccount = () => {
                   listType="collection"
                   currentList={collectionCards.map((c) => c._id)}
                 />
-                <div className="flex gap-2 w-full p-2">
+                <div className="grid grid-cols-4 justify-around gap-2 p-2">
                   {collectionCards.map((card) => {
                     return <PkmnCard cardData={card} key={card._id} />
                   })}

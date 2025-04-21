@@ -11,7 +11,7 @@ export const Account = () => {
   const currentUser = useQuery(api.users.currentUser)
 
   return (
-    <div className="h-screen bg-background flex flex-col items-center p-4 w-full">
+    <div className="min-h-screen bg-background flex flex-col items-center p-4 w-full">
       <Authenticated>
         {accountId === currentUser?._id ? (
           <CurrentAccount />

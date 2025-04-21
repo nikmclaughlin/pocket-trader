@@ -13,8 +13,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from './ui/dialog'
-// import { Input } from '@/components/ui/input'
-// import { Label } from '@/components/ui/label'
 
 export const AddCardModal = (params: {
   listType: CardListType
@@ -50,7 +48,9 @@ export const AddCardModal = (params: {
             </DialogClose>
           </div>
         </DialogHeader>
-        <CardSelector cardState={selectedCards} cb={setSelectedCards} />
+        <div className="h-[80vh]">
+          <CardSelector cardState={selectedCards} cb={setSelectedCards} />
+        </div>
       </DialogContent>
     </Dialog>
   )
