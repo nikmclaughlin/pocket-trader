@@ -1,15 +1,9 @@
 import { useAuthActions } from '@convex-dev/auth/react'
-import { useQuery } from 'convex/react'
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
-import { api } from '../../convex/_generated/api'
 
 export const SignInForm = () => {
   const { signIn } = useAuthActions()
-  const navigate = useNavigate()
   const [step, setStep] = useState<'signUp' | 'signIn'>('signIn')
-
-  const currentUser = useQuery(api.users.currentUser)
 
   return (
     <form
@@ -17,10 +11,7 @@ export const SignInForm = () => {
       onSubmit={async (event) => {
         event.preventDefault()
         const formData = new FormData(event.currentTarget)
-        const signedIn = await signIn('password', formData)
-        if (signedIn && currentUser) {
-          navigate(`/account/${currentUser._id}`)
-        }
+        void signIn('password', formData)
       }}
     >
       <h2 className="text-2xl">Sign in</h2>
