@@ -17,6 +17,12 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 export const UserProfileForm = (params: { submitCb: () => void }) => {
   const { submitCb } = params
@@ -28,7 +34,12 @@ export const UserProfileForm = (params: { submitCb: () => void }) => {
       username: z.string().min(4, {
         message: 'Username must be at least 4 characters.',
       }),
-      friendId: z.object({ id: z.string(), isPublic: z.boolean() }).optional(),
+      friendId: z
+        .object({
+          id: z.string(),
+          isPublic: z.boolean(),
+        })
+        .optional(),
       isAnonymous: z.boolean(),
     })
     .partial()
@@ -36,14 +47,13 @@ export const UserProfileForm = (params: { submitCb: () => void }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: userData?.username || '',
-      friendId: userData?.friendId || { id: '', isPublic: false },
-      isAnonymous: userData?.isAnonymous || true,
+      username: userData ? userData.username : '',
+      friendId: userData ? userData.friendId : { id: '', isPublic: false },
+      isAnonymous: userData ? userData.isAnonymous : true,
     },
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
     updateUserData({ user: values })
     submitCb()
   }
@@ -55,6 +65,31 @@ export const UserProfileForm = (params: { submitCb: () => void }) => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-3"
         >
+          <Button
+            variant={'reverse'}
+            className="w-2 h-2 self-end absolute"
+            onClick={() => submitCb()}
+          >
+            X
+          </Button>
+          <FormField
+            control={form.control}
+            name="isAnonymous"
+            render={({ field }) => (
+              <FormItem>
+                <div className="flex gap-3 items-center">
+                  <FormLabel>Public account?</FormLabel>
+                  <FormControl>
+                    <Switch checked={field.value} onChange={field.onChange} />
+                  </FormControl>
+                </div>
+                <FormDescription>
+                  Activate to have your account and lists visible to other
+                  traders
+                </FormDescription>
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="username"
@@ -71,39 +106,50 @@ export const UserProfileForm = (params: { submitCb: () => void }) => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="friendId.id"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Friend ID</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormDescription>Your PTCGP Friend ID</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="friendId.isPublic"
-            render={({ field }) => {
-              console.log({ field })
-              return (
+          <div className="flex gap-3 items-between">
+            <FormField
+              control={form.control}
+              name="friendId.id"
+              render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Public?</FormLabel>
+                  <FormLabel>Friend ID</FormLabel>
                   <FormControl>
-                    <Switch checked={field.value} onChange={field.onChange} />
+                    <Input {...field} />
                   </FormControl>
-                  <FormDescription>
-                    Activate to allow others to see your Friend ID on your
-                    profile
-                  </FormDescription>
+                  <FormDescription>Your PTCGP Friend ID</FormDescription>
+                  <FormMessage />
                 </FormItem>
-              )
-            }}
-          />
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="friendId.isPublic"
+              render={({ field }) => (
+                <FormItem>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <FormLabel>Visible?</FormLabel>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>
+                          Activate to allow others to see your Friend ID on your
+                          profile
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                  <FormControl>
+                    <div className="h-10">
+                      <Switch checked={field.value} onChange={field.onChange} />
+                    </div>
+                  </FormControl>
+
+                  <FormDescription></FormDescription>
+                </FormItem>
+              )}
+            />
+          </div>
           <Button type="submit">Submit</Button>
         </form>
       </Form>
