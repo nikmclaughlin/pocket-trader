@@ -68,6 +68,7 @@ export const CurrentAccount = () => {
 
             {wishlistCards ? (
               <>
+                <div>TOTAL: {wishlistCards.length}</div>
                 <AddCardModal
                   listType="wishlist"
                   currentList={wishlistCards.map((c) => c._id)}
@@ -88,6 +89,7 @@ export const CurrentAccount = () => {
             <p className="font-heading text-2xl">MY COLLECTION</p>
             {collectionCards ? (
               <>
+                <div>TOTAL: {collectionCards.length}</div>
                 <AddCardModal
                   listType="collection"
                   currentList={collectionCards.map((c) => c._id)}

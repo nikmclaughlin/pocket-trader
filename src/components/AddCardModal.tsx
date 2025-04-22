@@ -31,7 +31,7 @@ export const AddCardModal = (params: {
         <Button className="max-w-max">EDIT {listName}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-4xl">
-        <DialogHeader>
+        <DialogHeader className="w-5/6">
           <div className="flex justify-between p-4">
             <DialogTitle>ADD TO YOUR {listName}</DialogTitle>
             <DialogClose asChild>
@@ -48,7 +48,7 @@ export const AddCardModal = (params: {
             </DialogClose>
           </div>
         </DialogHeader>
-        <div className="h-[80vh]">
+        <div className="h-[80vh] w-5/6">
           <CardSelector cardState={selectedCards} cb={setSelectedCards} />
         </div>
       </DialogContent>
