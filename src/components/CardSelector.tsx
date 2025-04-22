@@ -1,6 +1,6 @@
 import { ScrollArea } from '@radix-ui/react-scroll-area'
 import { useQuery } from 'convex/react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { api } from '../../convex/_generated/api'
 import { Id } from '../../convex/_generated/dataModel'
 import { cardIdSets, cn } from '../lib/utils'
@@ -21,7 +21,7 @@ export const CardSelector = (props: {
   )
   const [searchTerm, setSearchTerm] = useState('')
 
-  useEffect(() => {
+  const applySetFilter = useCallback(() => {
     setFilteredCards(
       cards?.filter(
         (card) =>
@@ -32,32 +32,27 @@ export const CardSelector = (props: {
   }, [cards, currentSetFilter])
 
   useEffect(() => {
+    applySetFilter()
+  }, [applySetFilter, cards, currentSetFilter])
+
+  useEffect(() => {
     const handler = setTimeout(() => {
-      if (searchTerm === '') {
-        setFilteredCards(
-          cards?.filter(
-            (card) =>
-              cardIdSets[card.id.split('-')[0] as keyof typeof cardIdSets] ===
-              currentSetFilter
-          )
+      applySetFilter()
+      setFilteredCards((f) =>
+        f?.filter(
+          (card) =>
+            card.name.includes(searchTerm) ||
+            card.name.includes(
+              searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1)
+            )
         )
-      } else {
-        setFilteredCards((f) =>
-          f?.filter(
-            (card) =>
-              card.name.includes(searchTerm) ||
-              card.name.includes(
-                searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1)
-              )
-          )
-        )
-      }
+      )
     }, 500)
 
     return () => {
       clearTimeout(handler)
     }
-  }, [cards, currentSetFilter, searchTerm])
+  }, [applySetFilter, searchTerm])
 
   const toggleCardSelection = (cardId: Id<'cards'>) => {
     if (!cardState?.includes(cardId)) {

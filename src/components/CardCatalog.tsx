@@ -1,7 +1,7 @@
 import { cardIdSets } from '@/lib/utils'
 import clsx from 'clsx'
 import { useQuery } from 'convex/react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { api } from '../../convex/_generated/api'
 import { PkmnCard } from './PkmnCard'
 import { Button } from './ui/button'
@@ -16,7 +16,7 @@ export const CardCatalog = () => {
   )
   const [searchTerm, setSearchTerm] = useState('')
 
-  useEffect(() => {
+  const applySetFilter = useCallback(() => {
     setFilteredCards(
       cards?.filter(
         (card) =>
@@ -27,32 +27,27 @@ export const CardCatalog = () => {
   }, [cards, currentSetFilter])
 
   useEffect(() => {
+    applySetFilter()
+  }, [applySetFilter, cards, currentSetFilter])
+
+  useEffect(() => {
     const handler = setTimeout(() => {
-      if (searchTerm === '') {
-        setFilteredCards(
-          cards?.filter(
-            (card) =>
-              cardIdSets[card.id.split('-')[0] as keyof typeof cardIdSets] ===
-              currentSetFilter
-          )
+      applySetFilter()
+      setFilteredCards((f) =>
+        f?.filter(
+          (card) =>
+            card.name.includes(searchTerm) ||
+            card.name.includes(
+              searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1)
+            )
         )
-      } else {
-        setFilteredCards((f) =>
-          f?.filter(
-            (card) =>
-              card.name.includes(searchTerm) ||
-              card.name.includes(
-                searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1)
-              )
-          )
-        )
-      }
+      )
     }, 500)
 
     return () => {
       clearTimeout(handler)
     }
-  }, [cards, currentSetFilter, searchTerm])
+  }, [applySetFilter, searchTerm])
 
   return (
     <div>
