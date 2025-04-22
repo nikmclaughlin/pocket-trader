@@ -65,6 +65,7 @@ export const CurrentAccount = () => {
           </TabsContent>
           <TabsContent value="wishlist">
             <p className="font-heading text-2xl">MY WISHLIST</p>
+            <p className="font-base text-md">Cards I'm looking for</p>
 
             {wishlistCards ? (
               <>
@@ -87,6 +88,7 @@ export const CurrentAccount = () => {
           </TabsContent>
           <TabsContent value="collection">
             <p className="font-heading text-2xl">MY COLLECTION</p>
+            <p className="font-base text-md">Cards I'm ready to trade</p>
             {collectionCards ? (
               <>
                 <div>TOTAL: {collectionCards.length}</div>

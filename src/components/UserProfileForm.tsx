@@ -46,9 +46,11 @@ export const UserProfileForm = (params: { submitCb: () => void }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: userData ? userData.username : '',
-      friendId: userData ? userData.friendId : { id: '', isPublic: false },
-      isAnonymous: userData ? userData.isAnonymous : true,
+      username: userData?.username ? userData.username : '',
+      friendId: userData?.friendId
+        ? userData.friendId
+        : { id: '', isPublic: false },
+      isAnonymous: userData?.isAnonymous ? userData.isAnonymous : true,
     },
   })
 
