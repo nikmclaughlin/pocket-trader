@@ -1,10 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation, useQuery } from 'convex/react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-
-import { useMutation, useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
-import { Switch } from './ui/switch'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -17,6 +15,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { Switch } from '@/components/ui/switch'
 import {
   Tooltip,
   TooltipContent,
@@ -78,14 +77,13 @@ export const UserProfileForm = (params: { submitCb: () => void }) => {
             render={({ field }) => (
               <FormItem>
                 <div className="flex gap-3 items-center">
-                  <FormLabel>Public account?</FormLabel>
+                  <FormLabel>Private account?</FormLabel>
                   <FormControl>
                     <Switch checked={field.value} onChange={field.onChange} />
                   </FormControl>
                 </div>
                 <FormDescription>
-                  Activate to have your account and lists visible to other
-                  traders
+                  Activate to hide your account and lists from other traders
                 </FormDescription>
               </FormItem>
             )}
