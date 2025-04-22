@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils'
 import { useQuery } from 'convex/react'
 import { NavLink, Outlet, useLocation } from 'react-router'
 import { api } from '../../convex/_generated/api'
+import { ThemePicker } from './ThemePicker'
 
 export const NavBar = () => {
   const currentUser = useQuery(api.users.currentUser)
@@ -57,6 +58,7 @@ export const NavBar = () => {
                 </NavigationMenuItem>
               )
             })}
+            <ThemePicker />
           </NavigationMenuList>
         </div>
       </NavigationMenu>
