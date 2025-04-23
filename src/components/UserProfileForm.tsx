@@ -33,12 +33,10 @@ export const UserProfileForm = (params: { submitCb: () => void }) => {
       username: z.string().min(4, {
         message: 'Username must be at least 4 characters.',
       }),
-      friendId: z
-        .object({
-          id: z.string(),
-          isPublic: z.boolean(),
-        })
-        .optional(),
+      friendId: z.object({
+        id: z.string(),
+        isPublic: z.boolean(),
+      }),
       isAnonymous: z.boolean(),
     })
     .partial()
@@ -50,11 +48,12 @@ export const UserProfileForm = (params: { submitCb: () => void }) => {
       friendId: userData?.friendId
         ? userData.friendId
         : { id: '', isPublic: false },
-      isAnonymous: userData?.isAnonymous ? userData.isAnonymous : true,
+      isAnonymous: userData?.isAnonymous === true,
     },
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log({ user: values })
     updateUserData({ user: values })
     submitCb()
   }
@@ -81,7 +80,10 @@ export const UserProfileForm = (params: { submitCb: () => void }) => {
                 <div className="flex gap-3 items-center">
                   <FormLabel>Private account?</FormLabel>
                   <FormControl>
-                    <Switch checked={field.value} onChange={field.onChange} />
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
                   </FormControl>
                 </div>
                 <FormDescription>
@@ -141,7 +143,10 @@ export const UserProfileForm = (params: { submitCb: () => void }) => {
                   </TooltipProvider>
                   <FormControl>
                     <div className="h-10">
-                      <Switch checked={field.value} onChange={field.onChange} />
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
                     </div>
                   </FormControl>
 
