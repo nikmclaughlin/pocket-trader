@@ -53,7 +53,6 @@ export const UserProfileForm = (params: { submitCb: () => void }) => {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log({ user: values })
     updateUserData({ user: values })
     submitCb()
   }

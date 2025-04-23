@@ -56,7 +56,6 @@ export const updateUser = mutation({
   },
   handler: async (ctx, args) => {
     const currentUser = await getAuthUserId(ctx)
-    console.log({ user: args.user })
     if (currentUser) {
       await ctx.db.patch(currentUser, args.user)
     }
