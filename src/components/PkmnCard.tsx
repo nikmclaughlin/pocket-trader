@@ -12,7 +12,8 @@ export const PkmnCard = (params: { cardData: Doc<'cards'> }) => {
         <h2 className="text-xl font-heading text-center">{cardData.name}</h2>
       </div>
       <div className="flex flex-col items-center justify-center py-4">
-        <img src={cardData.images.small} />
+        {/* <img src={cardData.images.small} /> */}
+        <img src="/card-back.webp" />
       </div>
       <p className="text-md">Set: {cardIdSets[cardSet]}</p>
       <p className="text-center text-sm">Card ID: {cardData.number}</p>

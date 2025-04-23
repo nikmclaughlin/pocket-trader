@@ -64,6 +64,7 @@ export const CardCatalog = () => {
           {Object.values(cardIdSets).map((setName) => (
             <Button
               variant={'noShadow'}
+              key={setName}
               onClick={() => setCurrentSetFilter(setName)}
               className={clsx(
                 'px-2, mx-1',

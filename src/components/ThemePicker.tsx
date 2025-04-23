@@ -45,7 +45,9 @@ export const ThemePicker = () => {
       </SelectTrigger>
       <SelectContent>
         {themeItemOptions.map(([themeKey, themeIcon]) => (
-          <SelectItem value={themeKey}>{themeIcon}</SelectItem>
+          <SelectItem key={themeKey} value={themeKey}>
+            {themeIcon}
+          </SelectItem>
         ))}
       </SelectContent>
     </Select>
