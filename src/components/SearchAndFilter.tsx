@@ -71,7 +71,7 @@ export const SearchAndFilter = (params: {
         value={searchTerm}
         onChange={(e) => searchByTerm(e.target.value)}
       />
-      <ScrollArea className="w-7/12 whitespace-nowrap">
+      <ScrollArea className="w-7/12 whitespace-nowrap overflow-scroll">
         {Object.values(cardIdSets).map((setName) => (
           <Button
             variant={'noShadow'}
