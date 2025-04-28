@@ -9,7 +9,9 @@ export const PkmnCard = (params: { cardData: Doc<'cards'> }) => {
   return (
     <div className="border-2 rounded p-2 flex flex-col items-center font-base text-foreground h-min">
       <div className="flex w-full justify-center items-center p-2">
-        <h2 className="text-xl font-heading text-center">{cardData.name}</h2>
+        <h2 className="text-sm md:text-lg lg:text-xl font-heading text-center">
+          {cardData.name}
+        </h2>
       </div>
       <div className="flex flex-col items-center justify-center py-4">
         {/* <img src={cardData.images.small} /> */}

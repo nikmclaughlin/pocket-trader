@@ -8,7 +8,9 @@ import { Button } from '@/components/ui/button'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-import { useState } from 'react'
+import { SearchAndFilter } from '@/components/SearchAndFilter'
+import { Doc } from 'convex/_generated/dataModel'
+import { useEffect, useState } from 'react'
 import { UserProfileForm } from '../components/UserProfileForm'
 
 // TODO: Split account tabs into separate component files
@@ -26,6 +28,25 @@ export const CurrentAccount = () => {
   const { signOut } = useAuthActions()
 
   const [isEditingProfile, setIsEditingProfile] = useState(false)
+  const [filteredWishlistCards, setFilteredWishlistCards] =
+    useState(wishlistCards)
+  const handleWishlistSearchChange = (newCards: Doc<'cards'>[]) => {
+    setFilteredWishlistCards(newCards)
+  }
+
+  useEffect(() => {
+    setFilteredWishlistCards(wishlistCards)
+  }, [wishlistCards])
+
+  const [filteredCollectionCards, setFilteredCollectionCards] =
+    useState(collectionCards)
+  const handleCollectionSearchChange = (newCards: Doc<'cards'>[]) => {
+    setFilteredCollectionCards(newCards)
+  }
+
+  useEffect(() => {
+    setFilteredCollectionCards(collectionCards)
+  }, [collectionCards])
 
   const userProfileFormSubmit = () => {
     setIsEditingProfile(false)
@@ -68,18 +89,22 @@ export const CurrentAccount = () => {
             <p className="font-base text-md">Cards I'm looking for</p>
 
             {wishlistCards ? (
-              <>
+              <div className="flex flex-col gap-2">
                 <div>TOTAL: {wishlistCards.length}</div>
                 <AddCardModal
                   listType="wishlist"
                   currentList={wishlistCards.map((c) => c._id)}
                 />
+                <SearchAndFilter
+                  cards={wishlistCards}
+                  parentSetter={handleWishlistSearchChange}
+                />
                 <div className="grid grid-cols-4 justify-around gap-2 p-2">
-                  {wishlistCards.map((card) => {
+                  {filteredWishlistCards?.map((card) => {
                     return <PkmnCard cardData={card} key={card._id} />
                   })}
                 </div>
-              </>
+              </div>
             ) : (
               <Button onClick={() => createCardList({ listType: 'wishlist' })}>
                 Create Wishlist
@@ -90,18 +115,22 @@ export const CurrentAccount = () => {
             <p className="font-heading text-2xl">MY COLLECTION</p>
             <p className="font-base text-md">Cards I'm ready to trade</p>
             {collectionCards ? (
-              <>
+              <div className="flex flex-col gap-2">
                 <div>TOTAL: {collectionCards.length}</div>
                 <AddCardModal
                   listType="collection"
                   currentList={collectionCards.map((c) => c._id)}
                 />
+                <SearchAndFilter
+                  cards={collectionCards}
+                  parentSetter={handleCollectionSearchChange}
+                />
                 <div className="grid grid-cols-4 justify-around gap-2 p-2">
-                  {collectionCards.map((card) => {
+                  {filteredCollectionCards?.map((card) => {
                     return <PkmnCard cardData={card} key={card._id} />
                   })}
                 </div>
-              </>
+              </div>
             ) : (
               <Button
                 onClick={() => createCardList({ listType: 'collection' })}

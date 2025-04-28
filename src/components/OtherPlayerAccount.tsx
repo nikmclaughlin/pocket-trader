@@ -5,7 +5,9 @@ import { api } from '../../convex/_generated/api'
 import { PkmnCard } from './PkmnCard'
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { Id } from 'convex/_generated/dataModel'
+import { Doc, Id } from 'convex/_generated/dataModel'
+import { useEffect, useState } from 'react'
+import { SearchAndFilter } from './SearchAndFilter'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 
 export const OtherPlayerAccount = () => {
@@ -20,6 +22,22 @@ export const OtherPlayerAccount = () => {
     listType: 'wishlist',
     user: targetId,
   })
+
+  const [filteredWishlistCards, setFilteredWishlistCards] =
+    useState(wishlistCards)
+  const handleWishlistSearchChange = (newCards: Doc<'cards'>[]) => {
+    setFilteredWishlistCards(newCards)
+  }
+
+  useEffect(() => {
+    setFilteredWishlistCards(wishlistCards)
+  }, [wishlistCards])
+
+  const [filteredCollectionCards, setFilteredCollectionCards] =
+    useState(collectionCards)
+  const handleCollectionSearchChange = (newCards: Doc<'cards'>[]) => {
+    setFilteredCollectionCards(newCards)
+  }
 
   return (
     <div>
@@ -43,8 +61,13 @@ export const OtherPlayerAccount = () => {
           <p className="font-heading text-2xl">COLLECTION</p>
           {collectionCards ? (
             <>
+              <div>TOTAL: {collectionCards.length}</div>
+              <SearchAndFilter
+                cards={collectionCards}
+                parentSetter={handleCollectionSearchChange}
+              />
               <div className="grid grid-cols-4 justify-around gap-2 p-2">
-                {collectionCards.map((card) => {
+                {filteredCollectionCards?.map((card) => {
                   return <PkmnCard cardData={card} key={card._id} />
                 })}
               </div>
@@ -62,8 +85,13 @@ export const OtherPlayerAccount = () => {
           <p className="font-heading text-2xl">WISHLIST</p>
           {wishlistCards ? (
             <>
+              <div>TOTAL: {wishlistCards.length}</div>
+              <SearchAndFilter
+                cards={wishlistCards}
+                parentSetter={handleWishlistSearchChange}
+              />
               <div className="grid grid-cols-4 justify-around gap-2 p-2">
-                {wishlistCards.map((card) => {
+                {filteredWishlistCards?.map((card) => {
                   return <PkmnCard cardData={card} key={card._id} />
                 })}
               </div>
