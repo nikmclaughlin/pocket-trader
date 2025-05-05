@@ -2,7 +2,7 @@ import { createContext } from 'react'
 
 // as const so ts treats these as literals
 export const themes = [
-  // 'grass',
+  'grass',
   'fire',
   'water',
   'lightning',

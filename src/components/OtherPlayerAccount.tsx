@@ -40,7 +40,7 @@ export const OtherPlayerAccount = () => {
   }
 
   return (
-    <div>
+    <div className="w-dvw px-4">
       <Card>
         <CardHeader>
           <CardTitle>{targetUser?.username} PROFILE</CardTitle>
@@ -53,7 +53,7 @@ export const OtherPlayerAccount = () => {
       </Card>
 
       <Tabs defaultValue="collection">
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="grid grid-cols-2">
           <TabsTrigger value="collection">Collection</TabsTrigger>
           <TabsTrigger value="wishlist">Wishlist</TabsTrigger>
         </TabsList>
@@ -62,6 +62,7 @@ export const OtherPlayerAccount = () => {
           {collectionCards ? (
             <>
               <div>TOTAL: {collectionCards.length}</div>
+              <div>VIEWING: {filteredCollectionCards?.length}</div>
               <SearchAndFilter
                 cards={collectionCards}
                 parentSetter={handleCollectionSearchChange}
@@ -86,6 +87,7 @@ export const OtherPlayerAccount = () => {
           {wishlistCards ? (
             <>
               <div>TOTAL: {wishlistCards.length}</div>
+              <div>VIEWING: {filteredWishlistCards?.length}</div>
               <SearchAndFilter
                 cards={wishlistCards}
                 parentSetter={handleWishlistSearchChange}

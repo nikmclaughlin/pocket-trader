@@ -97,3 +97,38 @@
   --ring: oklch(100% 0 0);
   --shadow: 4px 4px 0px 0px var(--border);
 }
+
+.grass {
+  --background: oklch(96.47% 0.0401 157.79);
+  --secondary-background: oklch(100% 0 0);
+  --foreground: oklch(0% 0 0);
+  --main-foreground: oklch(0% 0 0);
+  --main: oklch(79.76% 0.2044 153.08);
+  --border: oklch(0% 0 0);
+  --ring: oklch(0% 0 0);
+  --overlay: oklch(0% 0 0 / 0.8);
+  --shadow: 4px 4px 0px 0px var(--border);
+  --chart-1: #00d696;
+  --chart-2: #ff7a05;
+  --chart-3: #0099ff;
+  --chart-4: #ffbf00;
+  --chart-5: #7a83ff;
+  --chart-active-dot: #000;
+}
+
+.grass .dark {
+  --background: oklch(22.45% 0.0316 158.41);
+  --secondary-background: oklch(23.93% 0 0);
+  --foreground: oklch(92.49% 0 0);
+  --main-foreground: oklch(0% 0 0);
+  --main: oklch(73.03% 0.1865 153.23);
+  --border: oklch(0% 0 0);
+  --ring: oklch(100% 0 0);
+  --shadow: 4px 4px 0px 0px var(--border);
+  --chart-1: #00bd84;
+  --chart-2: #eb6d00;
+  --chart-3: #008ae5;
+  --chart-4: #e5ac00;
+  --chart-5: #7a83ff;
+  --chart-active-dot: #fff;
+}
