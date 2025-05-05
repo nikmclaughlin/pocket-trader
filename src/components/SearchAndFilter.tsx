@@ -71,20 +71,22 @@ export const SearchAndFilter = (params: {
         value={searchTerm}
         onChange={(e) => searchByTerm(e.target.value)}
       />
-      <ScrollArea className="w-7/12 whitespace-nowrap overflow-scroll">
-        {Object.values(cardIdSets).map((setName) => (
-          <Button
-            variant={'noShadow'}
-            key={setName}
-            onClick={() => filterCardsBySet(setName)}
-            className={clsx(
-              'px-2, mx-1',
-              setName === currentSetFilter && 'bg-secondary'
-            )}
-          >
-            {setName}
-          </Button>
-        ))}
+      <ScrollArea className="w-7/12 whitespace-nowrap overflow-scroll scrollbar-hidden ">
+        <div className="flex gap-2 w-max items-center">
+          {Object.values(cardIdSets).map((setName) => (
+            <Button
+              variant={'noShadow'}
+              key={setName}
+              onClick={() => filterCardsBySet(setName)}
+              className={clsx(
+                'px-2',
+                setName === currentSetFilter && 'bg-secondary'
+              )}
+            >
+              {setName}
+            </Button>
+          ))}
+        </div>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
       <div className="w-1/12">Results: {filteredCards?.length}</div>
