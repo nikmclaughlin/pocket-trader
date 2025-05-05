@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import { Doc } from 'convex/_generated/dataModel'
 import { useQuery } from 'convex/react'
 import { useEffect, useState } from 'react'
@@ -5,7 +6,8 @@ import { api } from '../../convex/_generated/api'
 import { PkmnCard } from './PkmnCard'
 import { SearchAndFilter } from './SearchAndFilter'
 
-export const CardCatalog = () => {
+export const CardCatalog = (props: { className: string }) => {
+  const { className } = props
   const fullCardList = useQuery(api.cards.list)
   const [filteredCards, setFilteredCards] = useState(fullCardList)
   const handleSearchChange = (newCards: Doc<'cards'>[]) => {
@@ -17,7 +19,7 @@ export const CardCatalog = () => {
   }, [fullCardList])
 
   return (
-    <div>
+    <div className={cn(className)}>
       <p className="font-heading text-3xl">CARD CATALOG</p>
       {fullCardList ? (
         <>
@@ -25,7 +27,7 @@ export const CardCatalog = () => {
             cards={fullCardList}
             parentSetter={handleSearchChange}
           />
-          <div className="grid grid-cols-4 justify-around gap-2 p-2">
+          <div className="grid grid-cols-4 justify-around gap-2 py-2">
             {filteredCards?.map((card) => (
               <PkmnCard key={card._id} cardData={card} />
             ))}

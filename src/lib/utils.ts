@@ -13,3 +13,14 @@ export const cardIdSets = {
   tcgpa2a: 'Triumphant Light',
   tcgpa2b: 'Shining Revelry',
 }
+
+export const hasOverflow = (
+  el: HTMLDivElement | null,
+  acceptableOverflowMargin?: number
+) => {
+  if (!el) return false
+  return (
+    el.scrollHeight > el.clientHeight + (acceptableOverflowMargin || 0) ||
+    el.scrollWidth > el.clientWidth + (acceptableOverflowMargin || 0)
+  )
+}

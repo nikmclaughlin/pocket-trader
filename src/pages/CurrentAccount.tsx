@@ -90,7 +90,10 @@ export const CurrentAccount = () => {
 
             {wishlistCards ? (
               <div className="flex flex-col gap-2">
-                <div>TOTAL: {wishlistCards.length}</div>
+                <div className="flex gap-2">
+                  <div>TOTAL: {wishlistCards.length}</div>
+                  <div>VIEWING: {filteredWishlistCards?.length}</div>
+                </div>
                 <AddCardModal
                   listType="wishlist"
                   currentList={wishlistCards.map((c) => c._id)}
@@ -116,7 +119,10 @@ export const CurrentAccount = () => {
             <p className="font-base text-md">Cards I'm ready to trade</p>
             {collectionCards ? (
               <div className="flex flex-col gap-2">
-                <div>TOTAL: {collectionCards.length}</div>
+                <div className="flex gap-2">
+                  <div>TOTAL: {collectionCards.length}</div>
+                  <div>VIEWING: {filteredCollectionCards?.length}</div>
+                </div>
                 <AddCardModal
                   listType="collection"
                   currentList={collectionCards.map((c) => c._id)}
