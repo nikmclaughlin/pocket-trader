@@ -40,14 +40,14 @@ export const SignInForm = () => {
   }
 
   return (
-    <Card className="w-1/2 p-10 flex flex-col items-center">
+    <Card className="w-xs sm:w-sm md:w-1/2 p-10 items-center">
       <CardHeader className="font-heading text-2xl w-1/2 text-center">
         <p>{step === 'signIn' ? 'Sign in' : 'Create Account'}</p>
       </CardHeader>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-6 flex flex-col"
+          className="space-y-6 flex flex-col w-60 sm:w-80"
         >
           <FormField
             control={form.control}
@@ -56,11 +56,7 @@ export const SignInForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="bill@cerulean.net"
-                    className="w-80"
-                    {...field}
-                  />
+                  <Input placeholder="bill@cerulean.net" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -73,12 +69,7 @@ export const SignInForm = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="*****"
-                    type="password"
-                    className="w-80"
-                    {...field}
-                  />
+                  <Input placeholder="*****" type="password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
