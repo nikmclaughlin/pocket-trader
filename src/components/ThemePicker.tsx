@@ -14,17 +14,17 @@ import {
   //   EclipseIcon,
   //   EyeIcon,
   FlameIcon,
+  LeafIcon,
   //   HandIcon,
-  //   LeafIcon,
   //   SparkleIcon,
   ZapIcon,
 } from 'lucide-react'
 
 const themeIconMap = {
-  //   grass: <LeafIcon />,
   fire: <FlameIcon />,
   water: <DropletIcon />,
   lightning: <ZapIcon />,
+  grass: <LeafIcon />,
   //   psychic: <EyeIcon />,
   //   fighting: <HandIcon />,
   //   darkness: <EclipseIcon />,
