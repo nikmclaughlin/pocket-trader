@@ -22,7 +22,7 @@ const setOptions = setList.map((setName) => {
 })
 
 export const FilterDrawer = () => {
-  const [currentSetFilter, setCurrentSetFilter] = useState(setOptions[0])
+  const [currentSetFilter, setCurrentSetFilter] = useState(setOptions)
 
   const handleSetSelect = (selections: typeof setOptions) => {
     setCurrentSetFilter(selections)

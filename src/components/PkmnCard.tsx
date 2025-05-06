@@ -8,7 +8,7 @@ export const PkmnCard = (params: { cardData: Doc<'cards'> }) => {
   const setIcon = `/set_logos/${sanitizeFileName(cardIdSets[cardSet])}.png`
   const rarityIcon =
     cardData.rarity === 'Promo'
-      ? null
+      ? undefined
       : `/rarities/${sanitizeFileName(cardRarities[cardData.rarity])}.png`
 
   return (
