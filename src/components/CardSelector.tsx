@@ -39,7 +39,7 @@ export const CardSelector = (props: {
           />
           <ScrollArea className="h-15/16 overflow-y-scroll">
             <ScrollBar orientation="vertical" />
-            <div className="max-w-[90vw] grid grid-cols-5 justify-around gap-2 p-2">
+            <div className="max-w-[90vw] grid grid-cols-5 justify-around gap-2 py-2">
               {filteredCards?.map((card) => {
                 return (
                   <div

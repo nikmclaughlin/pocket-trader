@@ -20,10 +20,13 @@ export const PkmnCard = (params: { cardData: Doc<'cards'> }) => {
       </div>
       <div className="flex flex-col items-center justify-center py-2">
         {/* <img src={cardData.images.small} /> */}
-        <img src="/card-back.webp" className="rounded-3xl" />
+        <img
+          src="/card-back.webp"
+          className="rounded sm:rounded-lg xl:rounded-2xl"
+        />
       </div>
-      <div className="w-full flex items-center justify-between">
-        <img src={setIcon} className="h-6" />
+      <div className="w-full flex flex-col lg:flex-row items-center justify-between">
+        <img src={setIcon} className=" hidden md:inline h-6" />
         <p className="text-center text-xs md:text-sm">
           Card ID: {cardData.number}
         </p>
