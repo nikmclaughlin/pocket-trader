@@ -1,26 +1,34 @@
-import { cardIdSets } from '@/lib/utils'
+import { cardIdSets, cardRarities, sanitizeFileName } from '@/lib/utils'
 import { Doc } from '../../convex/_generated/dataModel'
 
 export const PkmnCard = (params: { cardData: Doc<'cards'> }) => {
   const cardData = params.cardData
 
   const cardSet = cardData.id.split('-')[0] as keyof typeof cardIdSets
+  const setIcon = `/set_logos/${sanitizeFileName(cardIdSets[cardSet])}.png`
+  const rarityIcon =
+    cardData.rarity === 'Promo'
+      ? null
+      : `/rarities/${sanitizeFileName(cardRarities[cardData.rarity])}.png`
 
   return (
     <div className="border-2 rounded p-2 flex flex-col items-center font-base text-foreground h-min">
-      <div className="flex w-full justify-center items-center p-2">
+      <div className="flex w-full justify-center items-center">
         <h2 className="text-xs sm:text-sm md:text-lg lg:text-xl font-heading text-center">
           {cardData.name}
         </h2>
       </div>
-      <div className="flex flex-col items-center justify-center py-4">
+      <div className="flex flex-col items-center justify-center py-2">
         {/* <img src={cardData.images.small} /> */}
-        <img src="/card-back.webp" />
+        <img src="/card-back.webp" className="rounded-3xl" />
       </div>
-      <p className="text-xs md:text-base">Set: {cardIdSets[cardSet]}</p>
-      <p className="text-center text-xs md:text-sm">
-        Card ID: {cardData.number}
-      </p>
+      <div className="w-full flex items-center justify-between">
+        <img src={setIcon} className="h-6" />
+        <p className="text-center text-xs md:text-sm">
+          Card ID: {cardData.number}
+        </p>
+        <img src={rarityIcon} className="h-3" />
+      </div>
     </div>
   )
 }
