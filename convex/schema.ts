@@ -41,6 +41,23 @@ export const energyTypeValidator = v.union(
 )
 export type energyTypes = Infer<typeof energyTypeValidator>
 
+export const rarityValidator = v.union(
+  v.literal('Common'), // One Diamond
+  v.literal('Uncommon'), // Two Diamond
+  v.literal('Rare'), // Three Diamond
+  v.literal('Rare Double'), // Four Diamond
+  v.literal('Rare Illustration'), // One Star / Full Art
+  v.literal('Rare Super'), // Two Star
+  v.literal('Rare Special Illustration'), // Two Star / Rainbow
+  v.literal('Immersive'), // Three star
+  v.literal('Rare Shiny'), // One Shiny
+  v.literal('Rare Super Shiny'), // Two Shiny
+  v.literal('Rare Ultra'), // Crown
+  v.literal('Promo') // Promo
+)
+
+export type cardRarity = Infer<typeof rarityValidator>
+
 export const cardValidator = v.object({
   id: v.string(),
   name: v.string(),
@@ -83,7 +100,7 @@ export const cardValidator = v.object({
   retreatCost: v.optional(v.array(energyTypeValidator)),
   number: v.string(),
   artist: v.string(),
-  rarity: v.string(),
+  rarity: rarityValidator,
   flavorText: v.optional(v.string()),
   regulationMark: v.string(),
   images: v.object({
