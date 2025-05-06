@@ -1,7 +1,8 @@
-import { cardIdSets, cn } from '@/lib/utils'
+import { cardIdSets, cn, sanitizeFileName } from '@/lib/utils'
 import { ScrollArea } from '@radix-ui/react-scroll-area'
 import { Doc } from 'convex/_generated/dataModel'
 import { useEffect, useState } from 'react'
+// import { FilterDrawer } from './FilterDrawer'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { ScrollBar } from './ui/scroll-area'
@@ -45,7 +46,7 @@ export const SearchAndFilter = (props: {
   const searchByTerm = (term: string) => {
     // update input state
     setSearchTerm(term)
-    // only search the selected set
+    // only search filtered selection
     filterCardsBySet(currentSetFilter)
     // update local card list
     setFilteredCards((f) =>
@@ -64,6 +65,7 @@ export const SearchAndFilter = (props: {
 
   return (
     <div className={cn('flex justify-between gap-2', className)}>
+      {/* <FilterDrawer /> */}
       <div className="w-1/4">
         <Input
           type="search"
@@ -75,19 +77,22 @@ export const SearchAndFilter = (props: {
       <div className="w-7/12">
         <ScrollArea className="whitespace-nowrap overflow-scroll scrollbar-hidden ">
           <div className="flex gap-2 w-max items-center">
-            {Object.values(cardIdSets).map((setName) => (
-              <Button
-                variant={'noShadow'}
-                key={setName}
-                onClick={() => filterCardsBySet(setName)}
-                className={cn(
-                  'px-2',
-                  setName === currentSetFilter && 'bg-secondary'
-                )}
-              >
-                {setName}
-              </Button>
-            ))}
+            {Object.values(cardIdSets).map((setName) => {
+              const setIcon = `/set_logos/${sanitizeFileName(setName)}.png`
+              return (
+                <Button
+                  variant={'noShadow'}
+                  key={setName}
+                  onClick={() => filterCardsBySet(setName)}
+                  className={cn(
+                    'px-2',
+                    setName === currentSetFilter && 'bg-secondary'
+                  )}
+                >
+                  <img src={setIcon} className="h-5 sm:h-8" />
+                </Button>
+              )
+            })}
           </div>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
