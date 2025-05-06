@@ -8,7 +8,7 @@ export const Home = () => {
       <Authenticated>
         <PublicUserDirectory className="w-dvw max-w-4xl px-4" />
       </Authenticated>
-      <CardCatalog className="w-dvw px-4" />
+      <CardCatalog className="w-dvw max-w-7xl px-4" />
     </div>
   )
 }
