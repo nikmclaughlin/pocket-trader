@@ -45,9 +45,7 @@ export const CardSelector = (props: {
                   <div
                     className={cn(
                       'hover:scale-[1.02] transition-all',
-                      cardState.includes(card._id)
-                        ? 'bg-green-500/50'
-                        : 'bg-white'
+                      cardState.includes(card._id) ? 'bg-main' : 'bg-white'
                     )}
                     onClick={() => toggleCardSelection(card._id)}
                     key={card._id}
