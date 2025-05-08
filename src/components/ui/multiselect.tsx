@@ -9,7 +9,7 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
+  //   CommandInput,
   CommandItem,
   CommandList,
 } from '@/components/ui/command'
@@ -71,7 +71,7 @@ export const Multiselect = ({
       </PopoverTrigger>
       <PopoverContent className="w-[300px] p-0 border-0" align="start">
         <Command className="**:data-[slot=command-input-wrapper]:h-11">
-          <CommandInput placeholder="Search options..." />
+          {/* <CommandInput placeholder="Search options..." /> */}
           <div className="flex w-full">
             <Button
               variant="noShadow"

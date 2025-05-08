@@ -25,8 +25,8 @@ export const PkmnCard = (params: { cardData: Doc<'cards'> }) => {
           className="rounded sm:rounded-lg xl:rounded-2xl"
         />
       </div>
-      <div className="w-full flex flex-col lg:flex-row items-center justify-between">
-        <img src={setIcon} className=" hidden md:inline h-6" />
+      <div className="w-full flex flex-col md:flex-row items-center justify-between">
+        <img src={setIcon} className="h-4 sm:h-6" />
         <p className="text-center text-xs md:text-sm">
           Card ID: {cardData.number}
         </p>

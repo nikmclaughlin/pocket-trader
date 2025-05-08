@@ -6,7 +6,7 @@ export const themes = [
   'fire',
   'water',
   'lightning',
-  // 'psychic',
+  'psychic',
   // 'fighting,
   // 'darkness',
   // 'metal',
