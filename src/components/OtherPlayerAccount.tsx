@@ -40,7 +40,7 @@ export const OtherPlayerAccount = () => {
   }
 
   return (
-    <div className="w-dvw px-4">
+    <div className="w-full max-w-6xl px-4">
       <Card>
         <CardHeader>
           <CardTitle>{targetUser?.username} PROFILE</CardTitle>
