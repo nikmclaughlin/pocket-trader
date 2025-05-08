@@ -19,34 +19,37 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 
-type Option = {
+export type MultiselectOption = {
   value: string
   label: string
+  icon: string | undefined
 }
 
 export const Multiselect = ({
   options,
+  selected,
   selectCb,
 }: {
-  options: Option[]
-  selectCb?: (options: Option[]) => void
+  options: MultiselectOption[]
+  selected: MultiselectOption[]
+  selectCb?: (options: MultiselectOption[]) => void
 }) => {
   const [open, setOpen] = React.useState(false)
-  const [selectedOptions, setSelectedOptions] = React.useState<Option[]>([])
+  const [selectedOptions, setSelectedOptions] =
+    React.useState<MultiselectOption[]>(selected)
 
   const handleSelect = ({
     currentValue,
     currentOption,
   }: {
     currentValue: string
-    currentOption: Option
+    currentOption: MultiselectOption
   }) => {
-    setSelectedOptions(
-      selectedOptions.some((o) => o.value === currentValue)
-        ? selectedOptions.filter((o) => o.value !== currentValue)
-        : [...selectedOptions, currentOption]
-    )
-    selectCb?.(selectedOptions)
+    const newOptions = selectedOptions.some((o) => o.value === currentValue)
+      ? selectedOptions.filter((o) => o.value !== currentValue)
+      : [...selectedOptions, currentOption]
+    setSelectedOptions(newOptions)
+    selectCb?.(newOptions)
   }
 
   return (
@@ -56,7 +59,7 @@ export const Multiselect = ({
           variant="noShadow"
           role="combobox"
           aria-expanded={open}
-          className="w-fit min-w-[280px] max-w-full justify-between"
+          className="w-fit max-w-full justify-between"
         >
           <div className="w-full overflow-hidden flex">
             {selectedOptions.length > 0
@@ -69,9 +72,33 @@ export const Multiselect = ({
       <PopoverContent className="w-[300px] p-0 border-0" align="start">
         <Command className="**:data-[slot=command-input-wrapper]:h-11">
           <CommandInput placeholder="Search options..." />
+          <div className="flex w-full">
+            <Button
+              variant="noShadow"
+              className="grow"
+              onClick={() => {
+                const noOptions: MultiselectOption[] = []
+                setSelectedOptions(noOptions)
+                selectCb?.(noOptions)
+              }}
+            >
+              None
+            </Button>
+            <Button
+              variant="noShadow"
+              className="grow"
+              onClick={() => {
+                const allOptions = options
+                setSelectedOptions(allOptions)
+                selectCb?.(allOptions)
+              }}
+            >
+              All
+            </Button>
+          </div>
           <CommandList>
             <CommandEmpty>No option found.</CommandEmpty>
-            <CommandGroup className="p-2 [&_[cmdk-group-items]]:flex [&_[cmdk-group-items]]:flex-col [&_[cmdk-group-items]]:gap-1">
+            <CommandGroup className="p-2 [&_[cmdk-group-items]]:flex [&_[cmdk-group-items]]:flex-col [&_[cmdk-group-items]]:gap-1 ">
               {options.map((option) => (
                 <CommandItem
                   key={option.value}
@@ -88,6 +115,8 @@ export const Multiselect = ({
                   >
                     <CheckIcon className="size-4 text-current" />
                   </div>
+                  {option.icon && <img src={option.icon} className="h-4" />}
+
                   {option.label}
                 </CommandItem>
               ))}

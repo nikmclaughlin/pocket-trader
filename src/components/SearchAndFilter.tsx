@@ -1,11 +1,8 @@
-import { cardIdSets, cn, sanitizeFileName } from '@/lib/utils'
-import { ScrollArea } from '@radix-ui/react-scroll-area'
+import { cn } from '@/lib/utils'
 import { Doc } from 'convex/_generated/dataModel'
 import { useEffect, useState } from 'react'
-// import { FilterDrawer } from './FilterDrawer'
-import { Button } from './ui/button'
+import { FilterDrawer, FilterRule } from './FilterDrawer'
 import { Input } from './ui/input'
-import { ScrollBar } from './ui/scroll-area'
 
 export const SearchAndFilter = (props: {
   cards: Doc<'cards'>[]
@@ -14,40 +11,15 @@ export const SearchAndFilter = (props: {
 }) => {
   const { cards, parentSetter, className } = props
   const [filteredCards, setFilteredCards] = useState(cards)
-  const [currentSetFilter, setCurrentSetFilter] = useState(
-    Object.values(cardIdSets)[0]
-  )
+  const [appliedFilters, setAppliedFilters] = useState<FilterRule[]>([])
+
   const [searchTerm, setSearchTerm] = useState('')
-
-  // apply initial filter selection
-  useEffect(() => {
-    setFilteredCards(
-      cards.filter(
-        (card) =>
-          cardIdSets[card.id.split('-')[0] as keyof typeof cardIdSets] ===
-          Object.values(cardIdSets)[0]
-      )
-    )
-  }, [cards])
-
-  const filterCardsBySet = (setName: string) => {
-    // update input state
-    setCurrentSetFilter(setName)
-    // update local card list
-    setFilteredCards(
-      cards.filter(
-        (card) =>
-          cardIdSets[card.id.split('-')[0] as keyof typeof cardIdSets] ===
-          setName
-      )
-    )
-  }
 
   const searchByTerm = (term: string) => {
     // update input state
     setSearchTerm(term)
     // only search filtered selection
-    filterCardsBySet(currentSetFilter)
+    handleFilter(appliedFilters)
     // update local card list
     setFilteredCards((f) =>
       f.filter(
@@ -58,15 +30,31 @@ export const SearchAndFilter = (props: {
     )
   }
 
+  const handleFilter = (appliedFilters: FilterRule[]) => {
+    setAppliedFilters(appliedFilters)
+    // update local card list
+    const newCards = cards.filter((card) => {
+      const result = appliedFilters.map((filter) => {
+        if (filter.factor === 'id') {
+          return filter.values.includes(card.id.split('-')[0])
+        }
+        return filter.values.includes(card[filter.factor] as string)
+      })
+      return result.every((r) => r === true)
+    })
+    setFilteredCards(newCards)
+  }
+
   // update parent card list any time local filters change
   useEffect(() => {
     parentSetter(filteredCards)
   }, [filteredCards, parentSetter])
 
   return (
-    <div className={cn('flex justify-between gap-2', className)}>
-      {/* <FilterDrawer /> */}
-      <div className="w-1/4">
+    <div
+      className={cn('flex justify-between sm:justify-start gap-2', className)}
+    >
+      <div>
         <Input
           type="search"
           placeholder="Pokémon name"
@@ -74,31 +62,8 @@ export const SearchAndFilter = (props: {
           onChange={(e) => searchByTerm(e.target.value)}
         />
       </div>
-      <div className="w-7/12">
-        <ScrollArea className="whitespace-nowrap overflow-scroll scrollbar-hidden ">
-          <div className="flex gap-2 w-max items-center">
-            {Object.values(cardIdSets).map((setName) => {
-              const setIcon = `/set_logos/${sanitizeFileName(setName)}.png`
-              return (
-                <Button
-                  variant={'noShadow'}
-                  key={setName}
-                  onClick={() => filterCardsBySet(setName)}
-                  className={cn(
-                    'px-2',
-                    setName === currentSetFilter && 'bg-secondary'
-                  )}
-                >
-                  <img src={setIcon} className="h-5 sm:h-8" />
-                </Button>
-              )
-            })}
-          </div>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
-      </div>
-      <div className="w-1/12">
-        {/* <div>RESULTS: {filteredCards.length}</div> */}
+      <div className=" flex gap-2 items-center">
+        <FilterDrawer submitCb={handleFilter} />
       </div>
     </div>
   )
