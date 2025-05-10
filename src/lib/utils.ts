@@ -14,6 +14,7 @@ export const cardIdSets = {
   tcgpa2: 'Space-Time Smackdown',
   tcgpa2a: 'Triumphant Light',
   tcgpa2b: 'Shining Revelry',
+  tcgpa3: 'Celestial Guardians',
 }
 
 export const cardRarities = {
