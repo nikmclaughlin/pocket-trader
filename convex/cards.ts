@@ -3,6 +3,7 @@ import { filter } from 'convex-helpers/server/filter'
 import { v } from 'convex/values'
 import { internal } from './_generated/api'
 import {
+  ActionCtx,
   internalAction,
   internalMutation,
   MutationCtx,
@@ -85,18 +86,23 @@ export const replaceCardDataForSet = internalMutation({
   },
 })
 
+const getRemoteCardData = async (args: { ctx: ActionCtx; setId: string }) => {
+  const remoteCards = await args.ctx.runAction(
+    internal.github.fetchRemoteCardsForSet,
+    {
+      setId: args.setId,
+    }
+  )
+  return remoteCards
+}
+
 export const updateCardsForSet = internalAction({
   args: { setId: v.string() },
   handler: async (ctx, args) => {
     // fetch cards for set from data repo
-    const remoteCards = await ctx.runAction(
-      internal.github.fetchRemoteCardsForSet,
-      {
-        setId: args.setId,
-      }
-    )
+    const remoteCards = await getRemoteCardData({ ctx, setId: args.setId })
     console.log(
-      'Fetched ' + (remoteCards.length + 1) + ' cards matching ' + args.setId
+      'Fetched ' + remoteCards.length + ' cards matching ' + args.setId
     )
     await ctx.runMutation(internal.cards.replaceCardDataForSet, {
       setId: args.setId,
