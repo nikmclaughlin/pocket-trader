@@ -30,6 +30,11 @@ export const NavBar = () => {
       to: accountTarget,
       description: 'The current users account page.',
     },
+    {
+      title: 'Catalog',
+      to: '/catalog',
+      description: 'The full catalog of Pokemon TCG Pocket cards',
+    },
   ]
 
   return (

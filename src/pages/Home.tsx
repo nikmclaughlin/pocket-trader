@@ -1,6 +1,5 @@
 import { PublicUserDirectory } from '@/components/PublicUserDirectory'
 import { Authenticated } from 'convex/react'
-import { CardCatalog } from '../components/CardCatalog'
 
 export const Home = () => {
   return (
@@ -8,7 +7,6 @@ export const Home = () => {
       <Authenticated>
         <PublicUserDirectory className="w-dvw max-w-4xl px-4" />
       </Authenticated>
-      <CardCatalog className="w-dvw max-w-7xl px-4" />
     </div>
   )
 }
