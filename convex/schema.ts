@@ -132,6 +132,6 @@ export default defineSchema({
   userCardLists: defineTable({
     userId: v.id('users'),
     listType: v.union(v.literal('wishlist'), v.literal('collection')),
-    cards: v.array(v.id('cards')),
+    cards: v.array(cardValidator.fields.id),
   }).index('by_userId', ['userId']),
 })

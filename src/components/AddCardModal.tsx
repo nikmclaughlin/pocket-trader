@@ -2,7 +2,6 @@ import { useMutation } from 'convex/react'
 import { CardListType } from 'convex/userCardLists'
 import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
-import { Id } from '../../convex/_generated/dataModel'
 import { CardSelector } from './CardSelector'
 import { Button } from './ui/button'
 import {
@@ -16,10 +15,10 @@ import {
 
 export const AddCardModal = (params: {
   listType: CardListType
-  currentList: Id<'cards'>[]
+  currentList: string[]
 }) => {
   const { listType, currentList } = params
-  const [selectedCards, setSelectedCards] = useState<Id<'cards'>[]>(currentList)
+  const [selectedCards, setSelectedCards] = useState(currentList)
 
   const updateListCards = useMutation(api.userCardLists.updateListCards)
 
