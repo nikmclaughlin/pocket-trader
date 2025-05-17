@@ -96,7 +96,7 @@ export const CurrentAccount = () => {
                 </div>
                 <AddCardModal
                   listType="wishlist"
-                  currentList={wishlistCards.map((c) => c._id)}
+                  currentList={wishlistCards.map((c) => c.id)}
                 />
                 <SearchAndFilter
                   cards={wishlistCards}
@@ -125,7 +125,7 @@ export const CurrentAccount = () => {
                 </div>
                 <AddCardModal
                   listType="collection"
-                  currentList={collectionCards.map((c) => c._id)}
+                  currentList={collectionCards.map((c) => c.id)}
                 />
                 <SearchAndFilter
                   cards={collectionCards}

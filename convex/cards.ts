@@ -1,5 +1,6 @@
 import { getAuthUserId } from '@convex-dev/auth/server'
 import { filter } from 'convex-helpers/server/filter'
+import { paginationOptsValidator } from 'convex/server'
 import { v } from 'convex/values'
 import { internal } from './_generated/api'
 import {
@@ -8,12 +9,24 @@ import {
   internalMutation,
   MutationCtx,
   query,
+  QueryCtx,
 } from './_generated/server'
 import { Card, cardValidator } from './schema'
 
 export const list = query({
-  handler: async (ctx) => {
-    return await ctx.db.query('cards').collect()
+  handler: (ctx) => {
+    return listAllCards(ctx)
+  },
+})
+
+export const listAllCards = async (ctx: QueryCtx) => {
+  return await ctx.db.query('cards').collect()
+}
+
+export const paginatedList = query({
+  args: { paginationOpts: paginationOptsValidator },
+  handler: async (ctx, args) => {
+    return await ctx.db.query('cards').paginate(args.paginationOpts)
   },
 })
 
@@ -41,9 +54,9 @@ export const getListCardsForUser = query({
     const targetUserList = userCardLists?.filter(
       (list) => list.userId === targetUser && list.listType === args.listType
     )[0]
-    const allCards = await list(ctx, {})
+    const allCards = await listAllCards(ctx)
     if (allCards && targetUserList) {
-      return allCards.filter((card) => targetUserList.cards.includes(card._id))
+      return allCards.filter((card) => targetUserList.cards.includes(card.id))
     }
   },
 })

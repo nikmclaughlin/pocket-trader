@@ -2,21 +2,21 @@ import { ScrollArea } from '@radix-ui/react-scroll-area'
 import { useQuery } from 'convex/react'
 import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
-import { Doc, Id } from '../../convex/_generated/dataModel'
+import { Doc } from '../../convex/_generated/dataModel'
 import { cn } from '../lib/utils'
 import { PkmnCard } from './PkmnCard'
 import { SearchAndFilter } from './SearchAndFilter'
 import { ScrollBar } from './ui/scroll-area'
 
 export const CardSelector = (props: {
-  cardState: Id<'cards'>[]
-  cb: React.Dispatch<React.SetStateAction<Id<'cards'>[]>>
+  cardState: string[]
+  cb: React.Dispatch<React.SetStateAction<string[]>>
 }) => {
   const { cardState, cb } = props
   const cards = useQuery(api.cards.list)
   const [filteredCards, setFilteredCards] = useState(cards)
 
-  const toggleCardSelection = (cardId: Id<'cards'>) => {
+  const toggleCardSelection = (cardId: string) => {
     if (!cardState?.includes(cardId)) {
       cb([...cardState, cardId])
     } else {
@@ -45,9 +45,9 @@ export const CardSelector = (props: {
                   <div
                     className={cn(
                       'hover:scale-[1.02] transition-all',
-                      cardState.includes(card._id) ? 'bg-main' : 'bg-white'
+                      cardState.includes(card.id) ? 'bg-main' : 'bg-white'
                     )}
-                    onClick={() => toggleCardSelection(card._id)}
+                    onClick={() => toggleCardSelection(card.id)}
                     key={card._id}
                   >
                     <PkmnCard cardData={card} />
